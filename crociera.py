@@ -1,5 +1,7 @@
 from cabine import Cabina
-
+from cabine import CabinaDeluxe
+from cabine import Passeggero
+import operator
 
 class Crociera:
     def __init__(self, nome):
@@ -22,23 +24,27 @@ class Crociera:
                 for riga in file:
                     riga = riga.rstrip().split(",")
                     if riga[0][:3] == "CAB":
-                        if len(riga) > 4 and riga[4].isdigit():
-                            cabina = Cabina(riga[0], riga[1], riga[2], riga[3], riga[4], "-")
+                        if len(riga) == 4:
+                            cabina = Cabina(riga[0], riga[1], riga[2], riga[3], "-")
+                            self.cabine.append(cabina)
+                        elif len(riga) > 4 and riga[4].isdigit():
+                            prezzo = float(int(riga[3])*(1 + 0.1*int(riga[4])))
+                            cabina = Cabina(riga[0], riga[1], riga[2], prezzo, riga[4])
                             self.cabine.append(cabina)
 
                         elif len(riga) > 4 and riga[4].isalnum():
-                            animali = "-"
-                            tipo = riga[4]
-                            cabina = Cabina(codice, letti, ponte, prezzo, animali, tipo)
+                            prezzo = float(int(riga[3])*1.2)
+                            cabina = CabinaDeluxe(riga[0], riga[1], riga[2], prezzo, riga[4])
                             self.cabine.append(cabina)
 
                     elif riga[0][0] == "P":
-                        passeggero = {"codice" : riga[0],
-                                      "nome" : riga[1],
-                                      "cognome" : riga[2]}
+                        passeggero = Passeggero(riga[0], riga[1], riga[2])
                         self.passeggeri.append(passeggero)
 
-            print(Cabina.__str__(self))
+            for c in self.cabine:
+                print(c)
+            for p in self.passeggeri:
+                print(p)
         except FileNotFoundError:
             print("File non trovato")
 
@@ -50,6 +56,7 @@ class Crociera:
         # TODO
 
     def cabine_ordinate_per_prezzo(self):
+        return sorted(self.cabine, key = operator.attrgetter("prezzo"))
         """Restituisce la lista ordinata delle cabine in base al prezzo"""
         # TODO
 
