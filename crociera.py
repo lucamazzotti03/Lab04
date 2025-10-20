@@ -9,6 +9,7 @@ class Crociera:
         self.cabine = []
         self.passeggeri = []
         self.assegnazionicabine = []
+        self.cabine2 = []
 
     def __str__(self):
         return f"{self._nome}"
@@ -39,15 +40,18 @@ class Crociera:
                         if len(riga) == 4:
                             cabina = Cabina(riga[0], riga[1], riga[2], riga[3], "0", "disponibile")
                             self.cabine.append(cabina)
+                            self.cabine2.append(cabina)
                         elif len(riga) > 4 and riga[4].isdigit():
                             prezzo = float(int(riga[3])*(1 + 0.1*int(riga[4])))
                             cabina = Cabina(riga[0], riga[1], riga[2], prezzo, riga[4], "disponibile")
                             self.cabine.append(cabina)
+                            self.cabine2.append(cabina)
 
                         elif len(riga) > 4 and riga[4].isalnum():
                             prezzo = float(int(riga[3])*1.2)
                             cabina = CabinaDeluxe(riga[0], riga[1], riga[2], prezzo, riga[4], "disponibile")
                             self.cabine.append(cabina)
+                            self.cabine2.append(cabina)
 
                     elif riga[0][0] == "P":
                         passeggero = Passeggero(riga[0], riga[1], riga[2], "")
@@ -96,7 +100,7 @@ class Crociera:
         # TODO
 
     def cabine_ordinate_per_prezzo(self):
-        return sorted(self.cabine, key = operator.attrgetter("prezzo"))
+        return sorted(self.cabine2, key = operator.attrgetter("prezzo"))
         """Restituisce la lista ordinata delle cabine in base al prezzo"""
         # TODO
 

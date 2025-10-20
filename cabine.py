@@ -23,7 +23,7 @@ class CabinaDeluxe:
         self.tipo = tipo
         self.stato = stato
     def __str__(self):
-        return f"{self.codice} | {self.letti} letti - ponte {self.ponte} - prezzo {self.prezzo}€ - Tipo: {self.tipo} - {self.stato}"
+        return f"{self.codice} | {self.letti} letti - ponte {self.ponte} - prezzo {self.prezzo}€ - Tipo: {self.tipo:8} - {self.stato}"
 
 class Passeggero:
     def __init__(self, codice, nome, cognome, cabina):
@@ -32,4 +32,4 @@ class Passeggero:
         self.cognome = cognome
         self.cabina = cabina
     def __str__(self):
-        return f"codice:{self.codice}, nome:{self.nome} {self.cognome} - CABINA: {self.cabina}"
+        return f"codice:{self.codice}, nome:{self.nome:6} {self.cognome:8} - CABINA: {self.cabina}"
